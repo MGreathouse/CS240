@@ -9,10 +9,73 @@
 #======================================================================================
 
 from random import *
+from itertools import *
+
+# helper functions
+# converts the cards from number to card format
+def toCard(card):
+    cardText = ''
+
+    # convert card value
+    if card[0] == 1:
+        cardText = 'A'
+    elif card[0] == 11:
+        cardText = 'J'
+    elif card[0] == 12:
+        cardText = 'Q'
+    elif card[0] == 13:
+        cardText = 'K'
+    else:
+        cardText = str(card[0])
+
+    # convert suit
+    if card[1] == 0:
+        cardText += '\u0003'
+    elif card[1] == 1:
+        cardText += '\u0004'
+    elif card[1] == 2:
+        cardText += '\u0005'
+    elif card[1] == 3:
+        cardText += '\u0006'
+
+    return cardText
+
+
+# generates a list of all possible 5-card hands
+def getHands(hand):
+    return list(combinations(hand, 5))
+
+
+# converts hand strength to a nice string version
+def getStrength(strengthInt):
+    newVal = 'Nothing'
+
+    if strengthInt == 9:
+        newVal = 'Royal Flush'
+    elif strengthInt == 8:
+        newVal = 'Straight Flush'
+    elif strengthInt == 7:
+        newVal = 'Four of a Kind'
+    elif strengthInt == 6:
+        newVal = 'Full House'
+    elif strengthInt == 5:
+        newVal = 'Flush'
+    elif strengthInt == 4:
+        newVal = 'Straight'
+    elif strengthInt == 3:
+        newVal = 'Three of a Kind'
+    elif strengthInt == 2:
+        newVal = 'Two Pairs'
+    elif strengthInt == 1:
+        newVal = 'One Pair'
+
+    return newVal
+
 
 # generate the deck
 deck = list()
 hand = list()
+possibleHands = list()
 
 for i in range(1,14):
     for j in range(4):
@@ -25,9 +88,19 @@ while numHands <= 0:
     except:
         print('That is not a valid number. Try again.')
 
-numCards = 5
+numCards = 0
+while numCards <= 0:
+    try:
+        numCards = int(input('5 or 7 card hand: '))
+        if numCards != 5 and numCards != 7:
+            numCards = 0
+            a = 1 / 0 # forcing an error to be thrown since I am lazy and can use the input try statement
+    except:
+        print('That is not a valid number. Try again.')
 
 for loop in range(numHands):
+    winningHand = list()
+
     # randomize the deck
     shuffle(deck)
 
@@ -35,134 +108,118 @@ for loop in range(numHands):
     hand = deck[0:numCards]
     hand.sort()                 # If this is not done, most checks will fail
 
-    # check cards for highest hand
-    handStrength = 'Nothing'
+    # get all the potential 5 card hands
+    possibleHands = [list(elem) for elem in getHands(hand)]
 
-    # check if a royal flush
-    if handStrength == 'Nothing':
-        suit = hand[0][1]
-        cardsNeeded = [1, 10, 11, 12, 13]
+    # check each 5 card hand
+    for pHand in possibleHands:
+        pHand.sort()
+        # check cards for highest hand
+        handStrength = 0
 
-        if hand[0][0] == 1:
-            cardsNeeded.remove(1)
+        # check if a royal flush
+        if handStrength == 0:
+            suit = pHand[0][1]
+            cardsNeeded = [1, 10, 11, 12, 13]
 
-        for card in hand[-4:]:
-            if cardsNeeded.count(card[0]) != 0:
-                if card[1] == suit:
-                    suit = card[1]
-                    cardsNeeded.remove(card[0])
-            else:           #Not a royal flush
-                break
+            if pHand[0][0] == 1:
+                cardsNeeded.remove(1)
 
-        #check to see if all reqs were met
-        if len(cardsNeeded) == 0:
-            handStrength = 'Royal Flush'
+            for card in pHand[-4:]:
+                if cardsNeeded.count(card[0]) != 0:
+                    if card[1] == suit:
+                        suit = card[1]
+                        cardsNeeded.remove(card[0])
+                else:           #Not a royal flush
+                    break
 
-    # check if a straight flush
-    if handStrength == 'Nothing':
-        suit = hand[0][1]
-        prev = hand[0][0]
-        inARow = 1
+            #check to see if all reqs were met
+            if len(cardsNeeded) == 0:
+                handStrength = 9
 
-        for card in hand[1:]:
-            if (card[0] == prev + 1 or (card[0] == 11 and card[0] != prev)) and (card[1] == suit):
-                prev = card[0]
-                inARow += 1
-            else:
-                break
+        # check if a straight flush
+        if handStrength == 0:
+            suit = pHand[0][1]
+            prev = pHand[0][0]
+            inARow = 1
 
-        if inARow == 5:
-            handStrength = 'Straight Flush'
+            for card in pHand[1:]:
+                if (card[0] == prev + 1 or (card[0] == 11 and prev == 1 and pHand[2][1] == 12)) and (card[1] == suit):
+                    prev = card[0]
+                    inARow += 1
+                else:
+                    break
 
-    # check for 4 of a kind
-    if handStrength == 'Nothing':
-        if hand[0][0] == hand[3][0] or hand[1][0] == hand[4][0]:
-            handStrength = 'Four of a Kind'
+            if inARow == 5:
+                handStrength = 8
 
-    # check for a full house
-    if handStrength == 'Nothing':
-        if (hand[0][0] == hand[1][0] and hand[2][0] == hand[4][0]) or (hand[0][0] == hand[2][0] and hand[3][0] == hand[4][0]):
-            handStrength = 'Full House'
+        # check for 4 of a kind
+        if handStrength == 0:
+            if pHand[0][0] == pHand[3][0] or pHand[1][0] == pHand[4][0]:
+                handStrength = 7
 
-    # check for a flush
-    if handStrength == 'Nothing':
-        if hand[0][1] == hand[1][1] and hand[2][1] == hand[3][1] and hand[0][1] == hand[2][1] and hand[0][1] == hand[4][1]:
-            handStrength = 'Flush'
+        # check for a full house
+        if handStrength == 0:
+            if (pHand[0][0] == pHand[1][0] and pHand[2][0] == pHand[4][0]) or (pHand[0][0] == pHand[2][0] and pHand[3][0] == pHand[4][0]):
+                handStrength = 6
 
-    # check for a straight
-    if handStrength == 'Nothing':
-        prev = hand[0][0]
-        inARow = 1
+        # check for a flush
+        if handStrength == 0:
+            if pHand[0][1] == pHand[1][1] and pHand[0][1] == pHand[2][1] and pHand[0][1] == pHand[3][1] and pHand[0][1] == pHand[4][1]:
+                handStrength = 5
 
-        for card in hand[1:]:
-            if card[0] == prev + 1 or (card[0] == 11 and card[0] != prev):
-                prev = card[0]
-                inARow += 1
-            else:
-                break
+        # check for a straight
+        if handStrength == 0:
+            prev = pHand[0][0]
+            inARow = 1
 
-        if inARow == 5:
-            handStrength = 'Straight'
+            for card in pHand[1:]:
+                if card[0] == prev + 1 or (card[0] == 11 and prev == 1 and pHand[2][1] == 12):
+                    prev = card[0]
+                    inARow += 1
+                else:
+                    break
 
-    # check for three of kind
-    if handStrength == 'Nothing':
-        for i in range(3):
-            if hand[i][0] == hand[i + 1][0] and hand[i + 1][0] == hand[i + 2][0]:
-                handStrength = 'Three of a Kind'
+            if inARow == 5:
+                handStrength = 4
 
-    # check for two pair
-    if handStrength == 'Nothing':
-        # if the hand is a three of a kind, thi check will never trigger
-        if hand[0][0] == hand[1][0]:
-            if hand[2][0] == hand[3][0]:
-                handStrength = 'Two Pair'
-            elif hand[3][0] == hand[4][0]:
-                handStrength = 'Two Pair'
-        elif  hand[1][0] == hand[2][0] and hand[3][0] == hand[4][0]:
-            handStrength = 'Two Pair'
+        # check for three of kind
+        if handStrength == 0:
+            for i in range(3):
+                if pHand[i][0] == pHand[i + 1][0] and pHand[i + 1][0] == pHand[i + 2][0]:
+                    handStrength = 3
 
-    # check for a single pair
-    if handStrength == 'Nothing':
-        for i in range(4):
-            if hand[i][0] == hand[i + 1][0]:
-                handStrength = 'One Pair'
+        # check for two pair
+        if handStrength == 0:
+            # if the hand is a three of a kind, this check will never trigger
+            if pHand[0][0] == pHand[1][0]:
+                if pHand[2][0] == pHand[3][0]:
+                    handStrength = 2
+                elif pHand[3][0] == pHand[4][0]:
+                    handStrength = 2
+            elif  pHand[1][0] == pHand[2][0] and pHand[3][0] == pHand[4][0]:
+                handStrength = 2
 
+        # check for a single pair
+        if handStrength == 0:
+            for i in range(4):
+                if pHand[i][0] == pHand[i + 1][0]:
+                    handStrength = 1
 
-    # converts the cards from number to card format
-    def toCard(card):
-        cardText = ''
+        # attach the hand strength to the hand
+        pHand.append(handStrength)
 
-        # convert card value
-        if card[0] == 1:
-            cardText = 'A'
-        elif card[0] == 11:
-            cardText = 'J'
-        elif card[0] == 12:
-            cardText = 'Q'
-        elif card[0] == 13:
-            cardText = 'K'
-        else:
-            cardText = str(card[0])
-
-        # convert suit
-        if card[1] == 0:
-            cardText += '\u0003'
-        elif card[1] == 1:
-            cardText += '\u0004'
-        elif card[1] == 2:
-            cardText += '\u0005'
-        elif card[1] == 3:
-            cardText += '\u0006'
-
-        return cardText
-
+    # get best hand usig a lambda metod I do not understand, but works
+    possibleHands.sort(key = lambda x: x[5])
+    winningHand = possibleHands[-1]
 
     # convert hand to a string
     handString = ''
     for i in range(5):
-        handString += ', ' + toCard(hand[i])
+        handString += ', ' + toCard(winningHand[i])
 
     handString = handString[2:]
+    handStrength = getStrength(winningHand[5])
 
 
     print('Hand Value:        ' + handStrength)
