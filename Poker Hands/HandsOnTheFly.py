@@ -11,6 +11,18 @@
 from random import *
 from itertools import *
 
+# card strength dictionary
+strengthDict = {0: 'Nothing',
+                1: 'One Pair',
+                2: 'Two Pairs',
+                3: 'Three of a Kind',
+                4: 'Straight',
+                5: 'Flush',
+                6: 'Full House',
+                7: 'Four of a Kind',
+                8: 'Straight Flush',
+                9: 'Royal Flush'}
+
 # helper functions
 # converts the cards from number to card format
 def toCard(card):
@@ -48,28 +60,7 @@ def getHands(hand):
 
 # converts hand strength to a nice string version
 def getStrength(strengthInt):
-    newVal = 'Nothing'
-
-    if strengthInt == 9:
-        newVal = 'Royal Flush'
-    elif strengthInt == 8:
-        newVal = 'Straight Flush'
-    elif strengthInt == 7:
-        newVal = 'Four of a Kind'
-    elif strengthInt == 6:
-        newVal = 'Full House'
-    elif strengthInt == 5:
-        newVal = 'Flush'
-    elif strengthInt == 4:
-        newVal = 'Straight'
-    elif strengthInt == 3:
-        newVal = 'Three of a Kind'
-    elif strengthInt == 2:
-        newVal = 'Two Pairs'
-    elif strengthInt == 1:
-        newVal = 'One Pair'
-
-    return newVal
+    return strengthDict[strengthInt]
 
 
 # generate the deck
