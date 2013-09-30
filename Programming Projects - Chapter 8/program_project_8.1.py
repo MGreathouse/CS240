@@ -55,7 +55,6 @@ def print_info(monthly_averages):
     worst_six = monthly_averages[-7:-1]
 
     #display results
-    print(monthly_averages)
     print('Best Six Months')
     for month in best_six:
         print('{0}\t\t${1}'.format(*month))
