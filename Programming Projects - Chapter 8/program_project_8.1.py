@@ -1,3 +1,6 @@
+# Marcus Greathouse
+# Programming Project: Chapter 8-1
+
 # book provided function to read csv spreadsheet and split the data apart
 def get_data_list(file_name):
     data_file = open(file_name, 'r')
