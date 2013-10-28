@@ -5,7 +5,7 @@
 # Runs a simulation to see the rough odds of winning at each spots level
 #======================================================================================
 
-from random import *
+from random import sample
 
 # number of spots to be tested along with each less than itself
 spots = 10
@@ -15,7 +15,10 @@ tests = 1000000
 reportRate = 100000
 
 # set the pool
-pool = list(range(1,81))
+pool = range(1,81)
+
+# get house picks (out of 20)
+housePicks = sample(pool, 20)
 
 #set the summary var
 summary = list()
@@ -68,23 +71,18 @@ while spots > 0:
 
     # loop for number of tests in the spot
     while test < tests:
-        # match counter and 
+        # match counter and
         matches = 0
 
         # get player picks
-        shuffle(pool)
-        picks = pool[:spots]
-
-        # get house picks (out of 20)
-        shuffle(pool)
-        housePicks = pool[:20]
+        picks = sample(pool, spots)
 
         # check to see picks in house picks
         for pick in picks:
             if pick in housePicks:
                 matches += 1
 
-        # after count is figured add the result to the 
+        # after count is figured add the result to the
         counters[matches] += 1
 
         # set counter to go to next test
