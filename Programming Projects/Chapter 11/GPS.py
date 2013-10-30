@@ -1,5 +1,5 @@
 import random  # lets us generate a fake current position
-import math
+from math import radians, cos, sin, asin, sqrt, fabs
 
 
 class GPS(object):
@@ -15,6 +15,10 @@ class GPS(object):
         lon = random.random() * 360 - 180
         return (lat, lon)
 
+    # get waypoint and return it
+    def getWaypoint(self, waypoint):
+        return self.waypoints(waypoint)
+
     # returns number of waypoints
     def waypointsSaved(self):
         return len(self.waypoints.keys())
@@ -29,10 +33,20 @@ class GPS(object):
 
     # calculates distance between two points
     def distance(self, point1, point2=None):
+        '''Decided to make this return real distance, borrowed code from stackoverflow'''
         if point2 == None:
             point2 = self.getLoc()
+        else:
+            point2 = self.waypoints[point2]
 
-        n = self.waypoints[point1][0] - self.waypoints[point2][0]
-        d = self.waypoints[point1][1] - self.waypoints[point2][1]
+        point1 = self.waypoints[point1]
 
-        return math.fabs(n / d)
+        # convert to radians
+        lon1, lat1, lon2, lat2 = map(radians, [point1[1], point1[0], point2[1], point2[0]])
+
+        # haversine formula
+        dlon = lon1 - lon2
+        dlat = lat1 - lat2
+        a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+        c = 2 * asin(sqrt(a))
+        return 6367 * c  # kilometers

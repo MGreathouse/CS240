@@ -25,7 +25,12 @@ def gpsUI(myGPS):
         myGPS.saveWaypoint(name)
         print('\n{0} saved as Waypoint \'{1}\''.format(myGPS.waypoints[name], name))
     elif cmd == 'd':
-        pass
+        toPoint = input('\nWaypoint: ')
+        try:
+            distance = myGPS.distance(toPoint)
+            print('Waypoint {0} is {1} kilometers away.'.format(toPoint, distance))
+        except:
+            print('\nInvalid Waypoint!')
 
     # return the gps for the next loop
     return(myGPS)
