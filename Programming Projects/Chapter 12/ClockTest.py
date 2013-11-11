@@ -8,3 +8,5 @@ print(c2)
 
 c3 = Clock('1:02:05')
 print(c3)
+
+print('{} + {} = {}'.format(c1, c3, c1 + c3))

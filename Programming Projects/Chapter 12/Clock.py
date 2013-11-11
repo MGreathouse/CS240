@@ -1,7 +1,7 @@
 import re
 
 # this is a 12 hour clock
-class Clock(int):
+class Clock(object):
     # initialization method
     def __init__(self, time=False):  # midnight default
         if not time:
@@ -111,13 +111,22 @@ class Clock(int):
     def __repr__(self):
         return self.__str__()
 
-    # addition
+    # addition - ignoring book instructions for adding two times together ~ doing it all
     def __add__(self, num):
         if type(num) == Clock:
             cSum = self.hours + num.hours
+            cMin = self.minutes + num.minutes
+            cSec = self.seconds + num.seconds
+            # convert down to acceptable numbers
+            while cSec > 59:
+                cSec -= 60
+                cMin += 1
+            while cMin > 59:
+                cMin -= 60
+                cSum += 1
             while cSum > 11:
                 cSum -= 12
-            return '{:02}:{:02}:{:02}'.format(cSum, self.minutes, self.seconds)
+            return '{:02}:{:02}:{:02}'.format(cSum, cMin, cSec)
         elif isinstance(num, (int)):
             cSum = self.hours + num
             while cSum > 11:
