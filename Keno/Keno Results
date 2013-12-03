@@ -1,0 +1,102 @@
+10-Spot Game
+ (Match)	Matches[%]	Odds
+ (10)		0[0.0%]	1:N/A
+ (9)		6[0.0%]	1:166666.67
+ (8)		156[0.02%]	1:6410.26
+ (7)		1681[0.17%]	1:594.88
+ (6)		11433[1.14%]	1:87.47
+ (5)		51562[5.16%]	1:19.39
+ (0)		45401[4.54%]	1:22.03
+ (Combined)	110239[11.02%]	1:9.07
+
+For 1000000 tests, the average payout per game would be $-0.37
+
+9-Spot Game
+ (Match)	Matches[%]	Odds
+ (9)		0[0.0%]	1:N/A
+ (8)		45[0.0%]	1:22222.22
+ (7)		591[0.06%]	1:1692.05
+ (6)		5722[0.57%]	1:174.76
+ (5)		32669[3.27%]	1:30.61
+ (4)		114220[11.42%]	1:8.76
+ (0)		63476[6.35%]	1:15.75
+ (Combined)	216723[21.67%]	1:4.61
+
+For 1000000 tests, the average payout per game would be $-0.36
+
+8-Spot Game
+ (Match)	Matches[%]	Odds
+ (8)		3[0.0%]	1:333333.33
+ (7)		157[0.02%]	1:6369.43
+ (6)		2368[0.24%]	1:422.3
+ (5)		18316[1.83%]	1:54.6
+ (4)		81610[8.16%]	1:12.25
+ (0)		88424[8.84%]	1:11.31
+ (Combined)	190878[19.09%]	1:5.24
+
+For 1000000 tests, the average payout per game would be $-0.39
+
+7-Spot Game
+ (Match)	Matches[%]	Odds
+ (7)		28[0.0%]	1:35714.29
+ (6)		732[0.07%]	1:1366.12
+ (5)		8611[0.86%]	1:116.13
+ (4)		52317[5.23%]	1:19.11
+ (0)		121590[12.16%]	1:8.22
+ (Combined)	183278[18.33%]	1:5.46
+
+For 1000000 tests, the average payout per game would be $-0.42
+
+6-Spot Game
+ (Match)	Matches[%]	Odds
+ (6)		126[0.01%]	1:7936.51
+ (5)		3123[0.31%]	1:320.2
+ (4)		28321[2.83%]	1:35.31
+ (3)		129967[13.0%]	1:7.69
+ (Combined)	161537[16.15%]	1:6.19
+
+For 1000000 tests, the average payout per game would be $-0.37
+
+5-Spot Game
+ (Match)	Matches[%]	Odds
+ (5)		615[0.06%]	1:1626.02
+ (4)		12005[1.2%]	1:83.3
+ (3)		84208[8.42%]	1:11.88
+ (Combined)	96828[9.68%]	1:10.33
+
+For 1000000 tests, the average payout per game would be $-0.38
+
+4-Spot Game
+ (Match)	Matches[%]	Odds
+ (4)		3093[0.31%]	1:323.31
+ (3)		43160[4.32%]	1:23.17
+ (2)		212457[21.25%]	1:4.71
+ (Combined)	258710[25.87%]	1:3.87
+
+For 1000000 tests, the average payout per game would be $-0.37
+
+3-Spot Game
+ (Match)	Matches[%]	Odds
+ (3)		13793[1.38%]	1:72.5
+ (2)		138827[13.88%]	1:7.2
+ (Combined)	152620[15.26%]	1:6.55
+
+For 1000000 tests, the average payout per game would be $-0.41
+
+2-Spot Game
+ (Match)	Matches[%]	Odds
+ (2)		60171[6.02%]	1:16.62
+ (Combined)	60171[6.02%]	1:16.62
+
+For 1000000 tests, the average payout per game would be $-0.4
+
+1-Spot Game
+ (Match)	Matches[%]	Odds
+ (1)		249702[24.97%]	1:4.0
+ (Combined)	249702[24.97%]	1:4.0
+
+For 1000000 tests, the average payout per game would be $-0.38
+
+The best result would be to play 9 spots,
+where you will win $-360553 over 1000000 games,
+or about $-0.36 a game.
